@@ -13,19 +13,12 @@ import datetime
 
 # Variables
 time = datetime.datetime.now()
-i = 1 # Counter
 
 # Site1
-webpage = requests.get('https://www.supplychaindive.com/', )
+url = "https://www.supplychaindive.com/"
+webpage = requests.get(url)
 soup = BeautifulSoup(webpage.text, "html5lib")
-
-hl1 = soup.find("a", attrs={"class": "analytics t-dash-top-1"})
-hl2 = soup.find("a", attrs={"class": "analytics t-dash-top-2"})
-hl3 = soup.find("a", attrs={"class": "analytics t-dash-top-3"})
-hl4 = soup.find("a", attrs={"class": "analytics t-dash-top-4"})
-hl5 = soup.find("a", attrs={"class": "analytics t-dash-top-5"})
-
-headlines = [hl1, hl2, hl3, hl4, hl5]
+i = 1 # Counter
 
 # Checks Status Code
 if webpage:
@@ -34,10 +27,19 @@ else:
     print(f"{Fore.RED}Something went wrong!\n")
 
 # Display
-print(f"{Style.BRIGHT}{Fore.WHITE}Top Stories\n")
 
-for h in headlines:
-    print(f"{Fore.MAGENTA} {i}. {h.text}")
-    i += 1
+# Shows top 5 Stories
+for section in soup.find_all("section", attrs={"class": "top-stories"}):
+
+    if i > 5:
+        break
+
+    title = section.h2.text
+    print(f"{Fore.WHITE}{Style.BRIGHT}{title}\n")   
+
+    for article in soup.find_all("section", attrs={"class":"top-stories"}):
+        temp = article.ol.text
+        print(f"{Fore.MAGENTA}{temp}")
+    
 
 print(f"{Fore.LIGHTCYAN_EX}Pulled from 'https://www.supplychaindive.com/'\n\n{time}")
