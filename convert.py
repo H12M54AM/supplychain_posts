@@ -13,6 +13,7 @@ from colorama import Fore, Style
 
 # Variables
 time = datetime.datetime.now()
+counter = 0
 random = random.randint(1, 100)
 random_string = str(random)
 url = "https://evmagazine.com/sustainability"
@@ -26,14 +27,13 @@ print(f"\n{Fore.WHITE}{Style.BRIGHT}{title.text}\n")
 
 for data in soup.find_all("div", attrs={"class":"Card_CardWrapper__jRxGZ"}):
     temp = data.text
-
-    # Convert the data to JSON format
     json_data = json.dumps(temp)
     print(f"{Fore.LIGHTCYAN_EX}{temp}")
     print()
 
+
 print(f"{Fore.LIGHTMAGENTA_EX}Pulled from {url}\n\nat {time}")
 
 # Save the JSON data to a file
-with open(f'./exports/data-{random_string}.json', 'w') as f:
+with open(f'./exports/data-{random_string}.txt', 'w') as f:
     f.write(json_data)
