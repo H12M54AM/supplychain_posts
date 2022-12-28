@@ -17,6 +17,7 @@ time = datetime.datetime.now()
 # Site1
 url = "https://www.supplychaindive.com/"
 webpage = requests.get(url)
+
 soup = BeautifulSoup(webpage.text, "html5lib")
 
 i = 1 # Counter
